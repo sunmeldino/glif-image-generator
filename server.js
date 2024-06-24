@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.get('/generate-image-glif', async (req, res) => {
-    const prompt = req.query.prompt || "default prompt"; // Default prompt if none is provided
+    const prompt = req.query.prompt || "default prompt";
     try {
         const response = await axios.post('https://simple-api.glif.app', {
             id: 'clozwqgs60013l80fkgmtf49o',  // Replace with your Glif ID
@@ -19,7 +19,7 @@ app.get('/generate-image-glif', async (req, res) => {
         });
         res.json({ image_url: response.data.output });
     } catch (error) {
-        console.error('Error generating image:', error);
+        console.error('Error generating image:', error.response ? error.response.data : error.message);
         res.status(500).send('Failed to generate image');
     }
 });
